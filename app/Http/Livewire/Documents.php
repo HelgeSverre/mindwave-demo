@@ -7,13 +7,20 @@ use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 use Livewire\TemporaryUploadedFile;
 use Livewire\WithFileUploads;
+use Livewire\WithPagination;
 
 class Documents extends Component
 {
     use WithFileUploads;
+    use WithPagination;
 
     /** @var TemporaryUploadedFile[] */
     public $uploadedDocuments = [];
+    public $search;
+
+    protected $queryString = [
+        "search" => ["except" => ""],
+    ];
 
     public function save()
     {
@@ -28,13 +35,15 @@ class Documents extends Component
 
     public function getDocumentsQuery(): Builder
     {
-        return Document::query();
+        return Document::query()
+            ->when($this->search, fn(Builder $q, $value) => $q->where("filename", "like", "%$value%"))
+            ->latest();
     }
 
     public function render()
     {
         return view('livewire.documents', [
-            'documents' => $this->getDocumentsQuery()->paginate(),
+            'documents' => $this->getDocumentsQuery()->simplePaginate(),
         ]);
     }
 }
