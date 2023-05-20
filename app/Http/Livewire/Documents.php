@@ -5,12 +5,14 @@ namespace App\Http\Livewire;
 use App\Models\Document;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
+use Livewire\TemporaryUploadedFile;
 use Livewire\WithFileUploads;
 
 class Documents extends Component
 {
     use WithFileUploads;
 
+    /** @var TemporaryUploadedFile[] */
     public $uploadedDocuments = [];
 
     public function save()
@@ -19,8 +21,8 @@ class Documents extends Component
             'uploadedDocuments.*' => 'max:1024',
         ]);
 
-        foreach ($this->uploadedDocuments as $documents) {
-            $documents->store('documents');
+        foreach ($this->uploadedDocuments as $document) {
+            $document->store('documents');
         }
     }
 
