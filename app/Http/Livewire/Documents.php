@@ -16,10 +16,11 @@ class Documents extends Component
 
     /** @var TemporaryUploadedFile[] */
     public $uploadedDocuments = [];
+
     public $search;
 
     protected $queryString = [
-        "search" => ["except" => ""],
+        'search' => ['except' => ''],
     ];
 
     public function save()
@@ -36,7 +37,7 @@ class Documents extends Component
     public function getDocumentsQuery(): Builder
     {
         return Document::query()
-            ->when($this->search, fn(Builder $q, $value) => $q->where("filename", "like", "%$value%"))
+            ->when($this->search, fn (Builder $q, $value) => $q->where('filename', 'like', "%$value%"))
             ->latest();
     }
 

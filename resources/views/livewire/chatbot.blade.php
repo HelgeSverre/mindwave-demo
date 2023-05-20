@@ -65,10 +65,12 @@
     </div>
 
 
-    <div class="h-14 m-1 my-2 relative">
-        <div class="bg-white border border-gray-200 shadow flex rounded-lg overflow-hidden">
-            <div wire:loading.delay.class.remove="hidden"
-                 class="hidden absolute inset-0 bg-gray-400 z-50 flex items-center justify-center opacity-60">
+    <div class="h-14 p-1 my-2 relative flex items-center justify-center w-full">
+        <div class="h-12 bg-white border border-gray-200 shadow flex rounded-lg w-full bg-red-600 overflow-hidden">
+            <div
+                wire:loading.delay.class.remove="hidden"
+                class="hidden absolute inset-0 bg-gray-400 z-50 flex items-center justify-center opacity-60"
+            >
                 <x-heroicon-m-cog class="animate-spin h-6 w-6 text-gray-600"/>
             </div>
             <div class="flex-1">
@@ -78,7 +80,7 @@
                     wire:model.lazy="draft"
                     wire:keyup.enter="sendMessage"
                     wire:loading.attr="readonly"
-                    class="w-full block border-transparent outline-transparent focus:ring-0 outline-none focus:outline-transparent focus:border-transparent py-4 px-4 resize-none"
+                    class="w-full h-full block border-transparent outline-transparent focus:ring-0 outline-none focus:outline-transparent focus:border-transparent py-4 px-4 resize-none"
                     autofocus
                 >
             </div>
@@ -86,9 +88,9 @@
                 <button
                     wire:click="sendMessage"
                     wire:loading.attr="disabled"
-                    class="bg-blue-400 w-10 h-10 rounded-full flex justify-center items-center"
+                    class="bg-blue-400 w-9 h-9 rounded-full flex justify-center items-center"
                 >
-                    <x-heroicon-m-paper-airplane class="w-5 h-5 text-white -rotate-45"/>
+                    <x-heroicon-m-paper-airplane class="w-5 h-5 text-white -rotate-45 animate-spin"/>
                 </button>
             </div>
         </div>

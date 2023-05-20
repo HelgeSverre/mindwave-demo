@@ -1,8 +1,8 @@
 <?php
 
+use App\Http\Livewire\Chatbot;
 use App\Http\Livewire\Dashboard;
 use App\Http\Livewire\Documents;
-use App\Http\Livewire\Chatbot;
 use App\Http\Livewire\ShowDocument;
 use Illuminate\Support\Facades\Route;
 
