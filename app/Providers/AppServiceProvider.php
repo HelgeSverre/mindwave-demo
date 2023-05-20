@@ -1,0 +1,43 @@
+<?php
+
+namespace App\Providers;
+
+use App\Composers\MenuComposer;
+use App\Services\Bob;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\ServiceProvider;
+use Stevenmaguire\Services\Trello\Client;
+
+class AppServiceProvider extends ServiceProvider
+{
+    public function register(): void
+    {
+
+        $this->app->singleton(Bob::class, function () {
+            return new Bob(
+                bobCookie: [
+                    // Session cookies
+                    'appSession.0' => 'eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIiwiaWF0IjoxNjgzMTQ0NjIwLCJ1YXQiOjE2ODMyMzEzNDcsImV4cCI6MTY4MzMxNzc0N30..mfUpVprWgc3QgVLh.mq3eeDRn5kLLyWvxfXRla7YJG9zFzqI5Hq4Egjlum8c1JGYmSQVRwRoS37gAz4R2agpeSc5IEcNxP89MIKuRpYFc0GJu7B_3Zf9qHHSvFntZzqgsotndAXrNwkaMRqwieCTSe1CqoHA89AU1iaa_5nuNSnmxbtxrAXmAjGl4zOH6DiiZesrBgYaOLol65M84VK3d0GbxLT8hhdrlFt-Rq2pXNaS9Lo7rLAzOb9nNkN8bOisLwqr19HkMV1MNEYxoIRg4aoRvpG5Q0VIBgSL9wzggNLf_PUFdZnVi4-_e5EjlA9-5zE2QXGfw2MeT4TDvhaJA_OBmd_v-Rkq9F0HqHGb9VEFpzmoFxofvC6ewmmW2KzDMbge5-laimoiEKzBOAtxX7ucxojqzX5P9A7h2uBwSXzcx6mnKznNmQOQgCoT7U6t61UPqJKb1-3MU_lofu3wpHo6F4_o1sTjBLG-XWYNAgomImEODEBLepx2Ylg2CjjjKV8MRZk5bLvtTMauPWNUvkaEyfCuEhdfoPn6LhbHHepV4X70bYyfk_vjzG3_fcxvm3XwSr0rmKaTaqHfbZ10u3oTBkBORh8-9RhsNQ2hb2ys1roqs49gOWx1_qOdYevHgZ6ebKNiEUTo6Q8y0TDDN5d0JJpvQGLyO3eVPcHDM2IIIuffRP18MHiS7i7fwgM683vCRSAmWOL8pozZifX6paVeae_eYwvkWq8buQ8bywyZV1ElWAsWt57qX6NehFAYoD1y3PZOKsy9Iz9gx8PY85AxKuFIVjqpW46kt15mZUdMlIm8sOIE3bgW8elBFlJ0Q2AGBpAWLFzTYAFTdD2pOYTOCLs4ecPFuwj0Khmu7xBtrQ0XmcxrB2D2JPmz7g6b2zuSjPN33VhuuMz2i68gO6MR7AyW1YYLfl3RQu9uQA0kXZkqVQ0nAm6gZP8IOmIwcTk0-d144PjQRalaWQQu3eYFyCerd0BKeIgBcL13Bcs_eilyJ6LkGW_1aZLQuWtRtfMpVhFtHBstdOoPGbXX2AL0YvBavhnKK6hI80heA0Ij3IHmtAjG-hLDw-bPCQFYRDOYa0UyzSP8UkVuk6ykT2NpfNC_UwHCRpqvO5pwswa0HbrdPGmL5iJeHIC2CiJAt5u9VaULXIBFg9ZMcT9Dg89teNln2GxtxQfygjTHfMaT0oFJuEWUr1Nd2pAcdaP7vxc9aFXfaOZMsxQD6kRoz4X7z9W6jfmCIb8VXEo1d0fyJqEeX99DnkH_OxXSyj-o7iLIBZ1l4lEgxsEQcKQcc12viOui4eRgVyZ-LPbU5RM-JSppVQgoJRR0j7LzZOXZ4DUBsa5nfKfOdiKe-gEWPOn_NeTx92ITXHa5F4MqBe3HCL-dpRFXv9xNc0i42VDL1iIrsvbwaGYPbR5xemipU0SWpwuJP3CtDcZmh4wb-04ap6Uvq6Ij0JTE2n0ao0eolfJ83IBzPcnSsbgr7n6ESRNpjovcXA-3vFsfUFpnmbe7O39F254EKaJzbygfJXYbH3fZuJ5Uf0VZ6XAT4Yf4GWEQG3NUKA7XsA3fOOE_J6fp_bsPJD5z6Iz3xgUZhyfHZMoYxOOSgB38-L6G4010yRd8vcuQyr_sOKhUbzrFNYan-A-shDGCG2tAiFY54ffss3pCF9vnF9bIpaSl8T2sCWPOB55HDhPyvf9OJWv-rHQlZEm0YRc8EuJ-yqEyFnYy66wlLCF3l2nz4iWt5VdlJA8LRY53OfNCXbgb6EYJKWTDuJeGY5DIfa_m1WMR5jB2sazFnOgNsmP_uy3YbbwlO89QdIiFYKsH2CBoKJI01X6fSH4NucRvmUZeguGNKm4z0wFNyDwtH4ETuu_GV574TXiUNtQOMWGfVRO34N7muX3qwhvHVzEQQb_UwJnAqq5CUk1zK7TuBta1iSFyPlpwh_IvGmPCyJAfEzQWfj_Kp1XyGpz6yGvC0ZcLsQTVMzmK313PwY9Worgx0nF5-td-ZBwqiNIlHtjYhio3R2gZmarL7rhD2tnNDbSWHMkK3iIrCbxr4chI3lnv47KBBmz8O_dGnVozf0k2fDdGHQuhS7AurLNXFqEc6vWo18t0w0mcn4U4FnPJDaitaxZPRvS8QtqGRTxETbuge7hmEN8bKyfKngjq7exmnSog0bE6r9h66NXn0w5G_0KgvzWtL_M0_-AwM5JHZbnQ--BmPpxI9tgxPUAGdF_zqCVB2rsdF2OW5cABizKRA4kKycwHLZ1PO8LYsvcMYpKjyxTrr0_DcwPYsBddV5BhSP4XkePREvqBOekdl3n5xfiurbN9QGedTJMRCaXGQ6FvgsguX5Hy6_h_Pc2bZ321RERYcaHakdLhns4KBjVNxXsHlb9sShTBTyIf6T5fVQAlxJ375W0eb6lvcGiGWscItHpSLP9KJDArNZpDAI7s5Xvwip7lVg4cu4gfstO3bjjEUmPOhVc5ByCzUDHPw-ioUfn7_cIsUyVinNgakuCDjMndOBuE96f4v3lxOULnSpK_88lz8JOqLr9elJpJHm-X5KSLAbDdgwu_BN1QLnJyEOT-YPTK5qG2-O8nd6O7WyeRPHkRAh2e3ZI8_lcAvG6aqu-q9a9c2KVrgUXvF9iVfKbNfHPkspmLMTpC7x-1JHKDlqkfBxtNhG0Sw0clkBa74WUJ8LN93mYpmQvLRmtxrf9H90sTcp-uJBC8plCh1zMB1ng819ORubePDSSKA_fu8WaKsW1NwRqbbyjH38FBT6CXOhoh05tKZVKfIbI0bk7Zr8b6VdEWIJNfFO6pQHjP18Tqpm2DJWVv5g8uKId6iGw6YBkIJQAuw80dyH9VQxV5luM_HquohsFbvNXo4DkTywW4R67lJAkcdd7kbPA0nrRlljj-sV3dml5YMW8epPm_ERVLcsUsnf7MI0cdCls9lt7bUTHbCNeTGEZJb6GKc9nRBQYP-ZTsyitwQhj83ymS6yfDVgOxn-gvczSGtPEKL9GDB_0humuDqA_Zi7itLeBp7Q3WuwCzXYX8eh-l5EnVfkeiJt9Ht36MPdPQTihAgbFt0QvuuHuR47N13KYWfBItrCpFIz4xGLhW7GlGMDUgGW-bjXpy7fOrQCnv6ckIxVSsmzoyPwzPgez28Hj1iLg_AjCBslsx0XbfRWl-Za1rTBLAz0o6NvEua8AEUAoxVW5YoILjkGK3UxUYd7eRkBV8HOQdJb8FYBkYhNvsGM2sFRNz2rOUDcHZ-cmrpiOeoxb7nhebTSNWox5bjbcc6U9PTdebJ1dAC4XAsexgesAheeSBFHMsxv6BxJ_nVDnyjOSLeqb9GAgpKNz_FjWoj_52IDOeNGBXh66AdKQFIkmsAScIT8NzfnUEPI0Cvs2FLV1DNMI6rrN7yNAynSKNMIBtZMfE8Rn3pPx6S4TlufetP3JYVWFocs1PThjfku-nB-5bW0XthQnPj6bxojq-bi50-RAtSsiyy2XWbmDYK_1gA3r0Wz9axfQuykwlqJg7ATDRZnEy6F3CTypFBEKIKPpn9D6U0gyYGRDi4o1MtCJC7RXhWaxeO8ASQY9L6PnHf3S69VoDUqGud7qc5MXNJ-e97hLjP_BRLWfuVTyTII7DH-4fF7FGgFamI68GxTmXzWos3vWbPVoUqMfW3M0aN22swfXK95zBpt1B_-s9_HfSo1XgoqjqsA77loxMlNiY1jDE8gnkzMzBlkqjEHDIU3bucFCd6Qn9GJn5zZp_GuVSovlxLKDd9io-l0J19tkka1-vl5hfiw_IXX6yE4s7JNhUSoMGQSt7pIRSLM4fmrX3QwChR21EM_sJGZ_bIeZPs-mvOic92Ij7TKtUxhUKU9oLxeXv2C0HeUNPFsecKemmPb7XjBkODdTtaBa2Kg2_-tX',
+                    'appSession.1' => 'ktTvfCGY9xiXVO-3Yr6_c922Q6UQ_-hdV9dB_2BZ9enxJycM21AjLciIQySOv_G7RjtC8ncrlcwQbaeFQ9JxAGeqvC16laqevSZNwE5XaA9besL6ds7t2J-AOVIfD7L6bNaVSHwA.uh9YDuH74aWJAcY2ECkccA',
+                ],
+                onPropertyCookie: [
+                    'On.Portal.Cookie' => 'CfDJ8AONCkP4r6JPvRoSixqlYNsO4a37qPjl9UConsVU7bfrW5KzAZ3jxLYRxVci40G6hRwO0Wi9ZreAD0du1KJZvqE3UmbOjyyX9CFQeZd3IX4_zWfiAWZfCY5uqW3wZpf-CfKLW2GSoZY8S6-FK5lTtWFDDugYUteqK-KJUyLm2SgSnNmWzCLXkDpuJ6Wi-zvY9zlozfaaGxEagfX0Z0aOmrU2wIdbufGvvbJQ5OIxvhpjazvbQ5Pw5038rENsWFMfjOUDEs7qPy5wT4uo9fyonqdUJwz0wRa7I1k8uSC72pMSpvTxgNG7f7ctTeDTrSse0p3_zBbWmdCZ8cjta6PFcWnbp-Gga0jZjzoTiTkoIo5Ve9vg84zv0-prqSPFlrk8YFKlw9rxiTgB5un6-IT21qPFZnzw9ixUwDhNiKNwKJCzz3crJluA6lPbwaaeCx2BsXm39zQGo7rMA8-oXLADSVAOLno5pHXlIrfAGNcPQysMU3xdPO61hAq94kKceZCroLtTxoJGIMRuhghh1LTZsbL3Ek6SxW4yMroeYY6GzVV2xrOqRRFPTwkGKxptcKgDRvOmwcNCCgqMu-ln2Bz4b1spAI092tTBS3Y_MYbjgPP1VgFxLttDzwRpnM2tXHY5i1cyvv1Ba4nvR_ohb70rDC_-3ax891kGVswa4aYNHbrcYIEwfSvZpsLyXDLR4wW2iH0p2ayNJkE3DX72d8N7bzya_t-lh5QBDUKnhS2JL3qKJhqrj08LhztgDXTA-HFYR6MLWZVYLceCv9hCN8Sl3SkdiP29M8no8yPJfqUuGzJmCcDToz7Rg9na6Os2lttbVnksrmiSbopInsi4H29BSShLmw2T7VaYzUnS4Czecg-rPz3_E-Yr0eRgSPpe-VLMJqnIVce77tQ2wWSYiXS2WB6SLMBU776unkNEE7LyiUjXDKdtdArUQQ-GaHBrGQthhzFt8ZnXx4hD7JrBPY50osDn1daFER44kfNDhpb0Ne7Zh1cAT-Gear7YMv-oB-ykemXfLVncm1H9AgnvuAgSW3QKBDZ5WwP42jR79aeNRhcpIpdB34xt7iisOcHdsz5CFUqYttYzqhF22XUWMuzmGQBLgUsxEKgwBaBJGkU_QPbKwMJyxGOYbqelh8R8GyNQwA',
+                ]
+            );
+        });
+
+        $this->app->bind(Client::class, function () {
+            return new Client([
+                'key' => env('TRELLO_API_KEY'),
+                'secret' => env('TRELLO_API_SECRET'),
+                'token' => env('TRELLO_API_TOKEN'),
+            ]);
+        });
+
+    }
+
+    public function boot(): void
+    {
+        View::composer(['layouts.app'], MenuComposer::class);
+    }
+}
