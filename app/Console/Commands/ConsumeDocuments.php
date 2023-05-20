@@ -20,6 +20,7 @@ class ConsumeDocuments extends Command
     {
         $folder = $this->argument('folder');
 
+        // TODO(21 May 2023) ~ Helge: This doesnt work on sail if not inside project and relative path
         $files = Finder::create()->files()->in($folder);
 
         if (! $files) {
