@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7e8e16d1dd64d08a90ec44153f433c34",
+    "content-hash": "b94cce889c7ff5c96ba0751c46b857be",
     "packages": [
         {
             "name": "blade-ui-kit/blade-heroicons",
@@ -2119,7 +2119,7 @@
             "dist": {
                 "type": "path",
                 "url": "../mindwave",
-                "reference": "5b8b9259393ba54aaba4fa220e4aa97dfeede4ca"
+                "reference": "756e7fa9976a38e188d2216b98689fadf71f2363"
             },
             "require": {
                 "guzzlehttp/guzzle": "^7.5",
@@ -2204,7 +2204,7 @@
                 "mindwave"
             ],
             "transport-options": {
-                "symlink": true,
+                "symlink": false,
                 "relative": true
             }
         },

@@ -12,7 +12,7 @@
             "type": "path",
             "url": "../mindwave",
             "options": {
-                "symlink": true
+                "symlink": false
             }
         }
     ],
