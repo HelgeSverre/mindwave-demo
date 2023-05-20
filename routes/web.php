@@ -2,7 +2,7 @@
 
 use App\Http\Livewire\Dashboard;
 use App\Http\Livewire\Documents;
-use App\Http\Livewire\Robot;
+use App\Http\Livewire\Chatbot;
 use App\Http\Livewire\ShowDocument;
 use Illuminate\Support\Facades\Route;
 
@@ -20,4 +20,4 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', Dashboard::class)->name('dashboard');
 Route::get('/documents', Documents::class)->name('documents.index');
 Route::get('/documents/{document}', ShowDocument::class)->name('documents.show');
-Route::get('/robot', Robot::class)->name('robot.index');
+Route::get('/chatbot', Chatbot::class)->name('chatbot.index');

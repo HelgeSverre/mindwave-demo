@@ -8,7 +8,7 @@ use Livewire\Component;
 use Mindwave\Mindwave\Facades\Mindwave;
 use Mindwave\Mindwave\Memory\ConversationBufferMemory;
 
-class Robot extends Component
+class Chatbot extends Component
 {
     public Collection $messages;
 
@@ -64,6 +64,6 @@ class Robot extends Component
 
     public function render()
     {
-        return view('livewire.robot');
+        return view('livewire.chatbot');
     }
 }

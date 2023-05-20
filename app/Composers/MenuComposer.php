@@ -36,8 +36,8 @@ class MenuComposer
                 [
                     'icon' => 'heroicon-m-cpu-chip',
                     'label' => 'Chatbot',
-                    'url' => route('robot.index'),
-                    'active' => request()->routeIs('robot.*'),
+                    'url' => route('chatbot.index'),
+                    'active' => request()->routeIs('chatbot.*'),
                 ],
             ]
         );
