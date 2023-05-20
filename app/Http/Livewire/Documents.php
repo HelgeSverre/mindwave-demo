@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Jobs\ConsumeDocument;
 use App\Models\Document;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
@@ -9,13 +10,16 @@ use Livewire\TemporaryUploadedFile;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
 
+/**
+ * @property-read Document[] $documents
+ */
 class Documents extends Component
 {
     use WithFileUploads;
     use WithPagination;
 
-    /** @var TemporaryUploadedFile[] */
-    public $uploadedDocuments = [];
+    /** @var TemporaryUploadedFile */
+    public $uploadedDocument;
 
     public $search;
 
@@ -23,28 +27,28 @@ class Documents extends Component
         'search' => ['except' => ''],
     ];
 
-    public function save()
+    public function updatedUploadedDocument()
     {
         $this->validate([
-            'uploadedDocuments.*' => 'max:1024',
+            'uploadedDocument.*' => 'max:1024',
         ]);
 
-        foreach ($this->uploadedDocuments as $document) {
-            $document->store('documents');
-        }
+        ConsumeDocument::dispatch(Document::create([
+            'path' => $this->uploadedDocument->store('documents'),
+            'filename' => $this->uploadedDocument->getClientOriginalName(),
+        ]));
     }
 
-    public function getDocumentsQuery(): Builder
+    public function getDocumentsProperty()
     {
         return Document::query()
             ->when($this->search, fn (Builder $q, $value) => $q->where('filename', 'like', "%$value%"))
-            ->latest();
+            ->latest()
+            ->simplePaginate();
     }
 
     public function render()
     {
-        return view('livewire.documents', [
-            'documents' => $this->getDocumentsQuery()->simplePaginate(),
-        ]);
+        return view('livewire.documents');
     }
 }

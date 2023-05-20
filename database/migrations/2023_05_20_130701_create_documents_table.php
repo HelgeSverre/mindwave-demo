@@ -11,6 +11,7 @@ return new class extends Migration
         Schema::create('documents', function (Blueprint $table) {
             $table->id();
             $table->string('filename');
+            $table->string('path')->nullable();
             $table->string('type')->nullable();
             $table->longText('text')->nullable();
             $table->string('state')->nullable()->default('pending');

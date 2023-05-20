@@ -38,3 +38,4 @@ storage/*.key
 testbench.yaml
 vendor
 yarn-error.log
+storage/mindwave/*
