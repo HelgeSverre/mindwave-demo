@@ -9,6 +9,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Mindwave\Mindwave\Facades\DocumentLoader;
 use Mindwave\Mindwave\Facades\Mindwave;
 use Throwable;
@@ -33,8 +34,14 @@ class ConsumeDocument implements ShouldQueue
 
     public function handle(): void
     {
-        $doc = DocumentLoader::load(
-            data: Storage::get($this->document->path),
+        if (! Str::endsWith($this->document->path, '.pdf')) {
+            $this->fail();
+
+            return;
+        }
+
+        $doc = DocumentLoader::fromPdf(
+            Storage::get($this->document->path),
             meta: [
                 'id' => $this->document->id,
                 'filename' => $this->document->filename,
