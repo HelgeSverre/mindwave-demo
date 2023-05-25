@@ -2,19 +2,10 @@
 
 namespace App\Composers;
 
-use App\Services\Bob;
 use Illuminate\View\View;
 
 class MenuComposer
 {
-    protected Bob $bob;
-
-    public function __construct(Bob $bob)
-    {
-
-        $this->bob = $bob;
-    }
-
     public function compose(View $view)
     {
         $view->with(
