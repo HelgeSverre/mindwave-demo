@@ -36,8 +36,10 @@ class Chatbot extends Component
         $history = ConversationBufferMemory::fromMessages($this->messages->toArray());
 
         if ($msg == '/debug') {
-            //            dd($this->messages);
-            dd($history->conversationAsString('Human', 'Mindwave'));
+            $this->messages->push([
+                'role' => 'debug',
+                'content' => $history->conversationAsString('Human', 'Mindwave'),
+            ]);
 
             return;
         }

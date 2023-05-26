@@ -37,9 +37,8 @@ return [
         'weaviate' => [
             'api_url' => env('MINDWAVE_WEAVIATE_URL'),
             'api_token' => env('MINDWAVE_WEAVIATE_API_TOKEN'),
+            'index' => env('MINDWAVE_WEAVIATE_INDEX'),
             'additional_headers' => [],
-            'index' => 'items', // TODO(18 May 2023) ~ Helge: this concept needs to be implemented in vectorstore
         ],
     ],
-
 ];
