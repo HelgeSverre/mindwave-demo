@@ -12,12 +12,8 @@ class ConsumeDocuments extends Command
 
     public function handle()
     {
-
-        $documents = Document::query()->where('state', '!=', 'consumed')->get();
-
-        foreach ($documents as $document) {
+        Document::pending()->get()->each(function (Document $document) {
             ConsumeDocument::dispatch($document);
-        }
-
+        });
     }
 }
