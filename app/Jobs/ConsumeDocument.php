@@ -35,7 +35,7 @@ class ConsumeDocument implements ShouldQueue
     public function handle(): void
     {
         if (! Str::endsWith($this->document->path, '.pdf')) {
-            $this->fail();
+            $this->document->update(['state' => 'unsupported']);
 
             return;
         }
@@ -48,14 +48,11 @@ class ConsumeDocument implements ShouldQueue
             ]
         );
 
-        if ($doc->isEmpty()) {
-            $this->document->update(['state' => 'empty']);
-        }
-
-        $this->document->update([
-            'text' => $doc->content(),
-            'state' => 'consuming',
-        ]);
+        $this->document->update(
+            $doc->isEmpty()
+                ? ['state' => 'empty']
+                : ['state' => 'consuming', 'text' => $doc->content()]
+        );
 
         Mindwave::brain()->consume($doc);
 

@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Enums\DocumentState;
 use App\Jobs\ConsumeDocument;
 use App\Models\Document;
 use Illuminate\Console\Command;
@@ -12,7 +13,8 @@ class ConsumeDocuments extends Command
 
     public function handle()
     {
-        Document::pending()->get()->each(function (Document $document) {
+        Document::inState(DocumentState::pending)->get()->each(function (Document $document) {
+            $this->info("Queueing consumption of : {$document->id} - {$document->filename}");
             ConsumeDocument::dispatch($document);
         });
     }

@@ -5,13 +5,14 @@ namespace App\Http\Livewire;
 use App\Jobs\ConsumeDocument;
 use App\Models\Document;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Pagination\Paginator;
 use Livewire\Component;
 use Livewire\TemporaryUploadedFile;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
 
 /**
- * @property-read Document[] $documents
+ * @property-read Paginator|Document[] $documents
  */
 class Documents extends Component
 {
@@ -42,7 +43,7 @@ class Documents extends Component
     public function getDocumentsProperty()
     {
         return Document::query()
-            ->when($this->search, fn (Builder $q, $value) => $q->where('filename', 'like', "%$value%"))
+            ->when($this->search, fn(Builder $q, $value) => $q->where('filename', 'like', "%$value%"))
             ->latest()
             ->simplePaginate();
     }

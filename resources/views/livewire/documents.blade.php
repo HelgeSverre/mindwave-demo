@@ -5,7 +5,7 @@
                 wire:loading.flex
                 wire:target="uploadedDocument"
                 class="z-20 absolute inset-0 bg-gray-200/70 flex items-center justify-center">
-                <x-heroicon-s-cog-6-tooth class="h-5 w-5 flex-shrink-0 text-gray-500 animate-spin"/>
+                <x-heroicon-s-cog-6-tooth class="h-5 w-5 flex-shrink-0 text-gray-500 animate-spin" />
                 <span class="text-sm m-2 text-gray-600">Uploading...</span>
             </div>
             <input
@@ -33,40 +33,40 @@
                         @foreach($this->documents as $document)
                             <li class="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
                                 <div class="flex w-0 flex-1 items-center">
-                                    <x-heroicon-s-document class="h-5 w-6 flex-shrink-0 text-gray-400"/>
+                                    <x-heroicon-s-document class="h-5 w-6 flex-shrink-0 text-gray-400" />
 
                                     <div class="ml-4 flex min-w-0 flex-1 gap-2">
                                         <span class="truncate font-medium">{{ $document->filename }}</span>
 
-                                        @if($document->state === "pending")
+                                        @if($document->state === \App\Enums\DocumentState::pending)
                                             <span
-                                                class="inline-flex items-center rounded-full bg-gray-50 px-1.5 py-0.5 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10"
-                                            >
-                                    {{ $document->state }}
-                                </span>
-                                        @elseif($document->state === "empty")
+                                                class="inline-flex items-center rounded-full bg-gray-50 px-1.5 py-0.5 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">
+                                                {{ $document->state }}
+                                            </span>
+                                        @elseif($document->state === \App\Enums\DocumentState::empty)
                                             <span
                                                 class="inline-flex items-center rounded-full bg-yellow-50 px-1.5 py-0.5 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20">
-                                    {{ $document->state }}
-                                </span>
-                                        @elseif($document->state === "failed")
+                                                {{ $document->state }}
+                                            </span>
+                                        @elseif($document->state === \App\Enums\DocumentState::failed)
                                             <span
                                                 class="inline-flex items-center rounded-full bg-red-50 px-1.5 py-0.5 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
-                                    {{ $document->state }}
-                                </span>
-                                        @elseif($document->state === "consuming")
+                                                {{ $document->state }}
+                                            </span>
+                                        @elseif($document->state === \App\Enums\DocumentState::consuming)
                                             <span
                                                 class="inline-flex items-center rounded-full bg-blue-50 px-1.5 py-0.5 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
-                                    {{ $document->state }}
-                                </span>
-                                        @elseif($document->state === "consumed")
+                                                {{ $document->state }}
+                                            </span>
+                                        @elseif($document->state === \App\Enums\DocumentState::consumed)
                                             <span
                                                 class="inline-flex items-center rounded-full bg-green-50 px-1.5 py-0.5 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-                                    {{ $document->state }}
-                                </span>
+                                                {{ $document->state }}
+                                            </span>
                                         @endif
                                     </div>
                                 </div>
+
                                 <div class="ml-4 flex-shrink-0">
                                     <a href="{{ route("documents.show", $document) }}"
                                        class="font-medium text-purple-500 hover:text-purple-400">
