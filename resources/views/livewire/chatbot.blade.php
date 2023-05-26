@@ -16,7 +16,6 @@
 
             @foreach($messages as $message)
 
-
                 @if($message["role"] == "system" && $this->debug)
                     <div class="flex justify-end">
                         <div class="mb-4 flex">
@@ -52,6 +51,16 @@
                             <div class="flex-1 px-2">
                                 <div class="inline-block max-w-4xl rounded-3xl p-4 bg-purple-600 text-white">
                                     <span>{!! nl2br($message["content"]) !!}</span>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="w-12 h-12 relative">
+                                    <img
+
+                                        class="w-12 h-12 rounded-full mx-auto"
+                                        src="{{ asset("icon.png") }}"
+                                        alt="Mindwave"
+                                    />
                                 </div>
                             </div>
                         </div>
