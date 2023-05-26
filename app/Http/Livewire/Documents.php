@@ -67,6 +67,8 @@ class Documents extends Component
     public function deleteAll()
     {
         Document::all()->each(fn (Document $document) => $document->delete());
+
+        toast()->info('All documents have been deleted')->push();
     }
 
     public function getDocumentsProperty()

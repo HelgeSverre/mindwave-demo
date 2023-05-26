@@ -2,6 +2,7 @@
     <section x-data="Uploader({
         multiple: true,
         resetFilesOnAllFilesCompleted: true,
+        resetFilesOnAllFilesCompletedTimeout: 2500,
         onAllFilesCompleted: (files) => {
             $wire.set('uploads', files);
             console.log(files);
