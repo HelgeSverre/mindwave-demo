@@ -43,7 +43,7 @@ class Documents extends Component
     public function getDocumentsProperty()
     {
         return Document::query()
-            ->when($this->search, fn(Builder $q, $value) => $q->where('filename', 'like', "%$value%"))
+            ->when($this->search, fn (Builder $q, $value) => $q->where('filename', 'like', "%$value%"))
             ->latest()
             ->simplePaginate();
     }

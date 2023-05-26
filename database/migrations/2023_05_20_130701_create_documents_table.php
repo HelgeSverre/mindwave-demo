@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\DocumentState;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,7 +15,7 @@ return new class extends Migration
             $table->string('path')->nullable();
             $table->string('type')->nullable();
             $table->longText('text')->nullable();
-            $table->string('state')->nullable()->default('pending');
+            $table->string('state')->nullable()->default(DocumentState::pending);
             $table->timestamps();
         });
     }

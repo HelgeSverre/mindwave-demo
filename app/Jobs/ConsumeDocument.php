@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Enums\DocumentState;
 use App\Models\Document;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -29,13 +30,13 @@ class ConsumeDocument implements ShouldQueue
 
     public function failed(Throwable $exception): void
     {
-        $this->document->update(['state' => 'failed']);
+        $this->document->update(['state' => DocumentState::failed]);
     }
 
     public function handle(): void
     {
         if (! Str::endsWith($this->document->path, '.pdf')) {
-            $this->document->update(['state' => 'unsupported']);
+            $this->document->update(['state' => DocumentState::unsupported]);
 
             return;
         }
@@ -50,12 +51,12 @@ class ConsumeDocument implements ShouldQueue
 
         $this->document->update(
             $doc->isEmpty()
-                ? ['state' => 'empty']
-                : ['state' => 'consuming', 'text' => $doc->content()]
+                ? ['state' => DocumentState::empty]
+                : ['state' => DocumentState::consuming, 'text' => $doc->content()]
         );
 
         Mindwave::brain()->consume($doc);
 
-        $this->document->update(['state' => 'consumed']);
+        $this->document->update(['state' => DocumentState::consumed]);
     }
 }
