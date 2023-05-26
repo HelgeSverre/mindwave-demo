@@ -30,6 +30,11 @@ class Document extends Model
         $q->where('state', $documentState);
     }
 
+    public function scopeNotInState(Builder $q, DocumentState $documentState): void
+    {
+        $q->where('state', '!=', $documentState);
+    }
+
     /**
      * @param array{
      *     name: string,

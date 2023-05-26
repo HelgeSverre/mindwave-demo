@@ -13,7 +13,10 @@ class ConsumeDocuments extends Command
 
     public function handle()
     {
-        Document::inState(DocumentState::pending)->get()->each(function (Document $document) {
+        Document::whereNotIn('state', [
+            DocumentState::consumed,
+            DocumentState::consuming,
+        ])->get()->each(function (Document $document) {
             $this->info("Queueing consumption of : {$document->id} - {$document->filename}");
             ConsumeDocument::dispatch($document);
         });

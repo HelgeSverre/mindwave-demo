@@ -95,42 +95,46 @@
                         </li>
 
                         @foreach($this->documents as $document)
-                            <li class="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
+                            <li class="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6"
+                                wire:key="{{ $document->id }}">
                                 <div class="flex w-0 flex-1 items-center">
                                     <x-heroicon-o-document class="h-5 w-6 flex-shrink-0 text-gray-400" />
 
-                                    <div class="ml-4 flex min-w-0 flex-1 gap-2">
+                                    <div class="ml-4 flex items-center min-w-0 flex-1 gap-2">
                                         <span class="truncate font-medium">{{ $document->filename }}</span>
 
                                         @if($document->state === \App\Enums\DocumentState::pending)
                                             <span
                                                 class="inline-flex items-center rounded-full bg-gray-50 px-1.5 py-0.5 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">
-                                                {{ $document->state }}
+                                                {{ $document->state->label() }}
                                             </span>
-                                        @elseif($document->state === \App\Enums\DocumentState::empty)
+                                        @elseif($document->state === \App\Enums\DocumentState::empty || $document->state === \App\Enums\DocumentState::unsupported)
                                             <span
                                                 class="inline-flex items-center rounded-full bg-yellow-50 px-1.5 py-0.5 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20">
-                                                {{ $document->state }}
+                                                {{ $document->state->label() }}
                                             </span>
                                         @elseif($document->state === \App\Enums\DocumentState::failed)
                                             <span
                                                 class="inline-flex items-center rounded-full bg-red-50 px-1.5 py-0.5 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
-                                                {{ $document->state }}
+                                                {{ $document->state->label() }}
                                             </span>
                                         @elseif($document->state === \App\Enums\DocumentState::consuming)
                                             <span
                                                 class="inline-flex items-center rounded-full bg-blue-50 px-1.5 py-0.5 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
-                                                {{ $document->state }}
+                                                {{ $document->state->label() }}
                                             </span>
                                         @elseif($document->state === \App\Enums\DocumentState::consumed)
                                             <span
                                                 class="inline-flex items-center rounded-full bg-green-50 px-1.5 py-0.5 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-                                                {{ $document->state }}
+                                                {{ $document->state->label() }}
                                             </span>
                                         @endif
                                     </div>
                                 </div>
 
+                                <div class="ml-4 flex-shrink-0 space-x-4">
+                                    <span class="truncate font-normal text-gray-500">{{ $document->mime }}</span>
+                                </div>
                                 <div class="ml-4 flex-shrink-0 space-x-4">
                                     <a href="{{ route("documents.show", $document) }}"
                                        class="font-medium text-purple-500 hover:text-purple-400">

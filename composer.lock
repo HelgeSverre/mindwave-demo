@@ -2455,9 +2455,10 @@
             "dist": {
                 "type": "path",
                 "url": "../mindwave",
-                "reference": "ed33ebf9adfa9e5eaed26305f31f1afd7f34cba3"
+                "reference": "cb909a201bbdc18d4b0debf9318af9dc81eba1e4"
             },
             "require": {
+                "ext-zip": "*",
                 "guzzlehttp/guzzle": "^7.5",
                 "illuminate/contracts": "^10.0",
                 "openai-php/client": "^0.4.2",

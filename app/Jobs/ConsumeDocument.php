@@ -10,7 +10,6 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use Mindwave\Mindwave\Facades\DocumentLoader;
 use Mindwave\Mindwave\Facades\Mindwave;
 use Throwable;
@@ -35,19 +34,34 @@ class ConsumeDocument implements ShouldQueue
 
     public function handle(): void
     {
-        if (! Str::endsWith($this->document->path, '.pdf')) {
+        $meta = [
+            'id' => $this->document->id,
+            'filename' => $this->document->filename,
+            'mime' => $this->document->mime,
+            'size' => $this->document->size,
+        ];
+
+        $content = Storage::get($this->document->path);
+
+        /** @noinspection PhpDuplicateMatchArmBodyInspection */
+        $doc = match ($this->document->mime) {
+            'text/plain' => DocumentLoader::fromText(Storage::get($this->document->path), $meta),
+            'text/html' => DocumentLoader::fromHtml($content, $meta),
+            'application/pdf' => DocumentLoader::fromPdf($content, $meta),
+            'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => DocumentLoader::fromWord($content, $meta),
+
+            // TODO: Implement loaders
+            'text/csv' => null, // treat as text?
+            'text/xml' => null, // treat as text?
+            'text/calendar' => null,
+            'application/vnd.ms-excel' => null,
+        };
+
+        if ($doc === null) {
             $this->document->update(['state' => DocumentState::unsupported]);
 
             return;
         }
-
-        $doc = DocumentLoader::fromPdf(
-            Storage::get($this->document->path),
-            meta: [
-                'id' => $this->document->id,
-                'filename' => $this->document->filename,
-            ]
-        );
 
         $this->document->update(
             $doc->isEmpty()
