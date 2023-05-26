@@ -7,6 +7,11 @@
   resolved "https://registry.yarnpkg.com/@alloc/quick-lru/-/quick-lru-5.2.0.tgz#7bf68b20c0a350f936915fcae06f58e32007ce30"
   integrity sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==
 
+"@alpinejs/collapse@^3.12.1":
+  version "3.12.1"
+  resolved "https://registry.yarnpkg.com/@alpinejs/collapse/-/collapse-3.12.1.tgz#97c7a70675a6b056d1095a46ccd9122dc2050f19"
+  integrity sha512-B2psRpFIadRXKibnp2BMKP1XMjEg1ocms7h84fYhMLPdOTZBmrTpX9atLSIxW7Fc/mG/Mx9f7tiZdQW4q/4++Q==
+
 "@alpinejs/focus@^3.12.1":
   version "3.12.1"
   resolved "https://registry.yarnpkg.com/@alpinejs/focus/-/focus-3.12.1.tgz#68e9569e9afcca36a10f7905e23c3e9b12ca30f5"
@@ -578,6 +583,13 @@ autoprefixer@^10.4.14:
     picocolors "^1.0.0"
     postcss-value-parser "^4.2.0"
 
+axios@^0.21.1:
+  version "0.21.4"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.21.4.tgz#c67b90dc0568e5c1cf2b0b858c43ba28e2eda575"
+  integrity sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==
+  dependencies:
+    follow-redirects "^1.14.0"
+
 axios@^1.1.2:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/axios/-/axios-1.4.0.tgz#38a7bf1224cd308de271146038b551d725f0be1f"
@@ -1010,7 +1022,7 @@ focus-trap@^6.6.1:
   dependencies:
     tabbable "^5.3.3"
 
-follow-redirects@^1.15.0:
+follow-redirects@^1.14.0, follow-redirects@^1.15.0:
   version "1.15.2"
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.2.tgz#b460864144ba63f2681096f274c4e57026da2c13"
   integrity sha512-VQLG33o04KaQ8uYi2tVNbdrWp1QWxNNea+nmIB4EVM28v0hmP17z7aG1+wAkNzVq4KeXTq3221ye5qTJP91JwA==
@@ -1393,6 +1405,13 @@ just-diff@^6.0.0:
   version "6.0.2"
   resolved "https://registry.yarnpkg.com/just-diff/-/just-diff-6.0.2.tgz#03b65908543ac0521caf6d8eb85035f7d27ea285"
   integrity sha512-S59eriX5u3/QhMNq3v/gm8Kd0w8OS6Tz2FS1NG4blv+z0MuQcBRJyFWjdovM0Rad4/P4aUPFtnkNjMjyMlMSYA==
+
+laravel-vapor@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/laravel-vapor/-/laravel-vapor-0.6.0.tgz#69118989668125666b0258799b5765c1cab834a1"
+  integrity sha512-bfEnyaIAmUInIYAE/XBwuP9hiZMkXmL+X7Qx7Fr7e/I91fwftNr3xvsMXz2CjDVmxXoY0mBaSbZAJvKSTBZGSg==
+  dependencies:
+    axios "^0.21.1"
 
 laravel-vite-plugin@^0.7.2:
   version "0.7.4"
