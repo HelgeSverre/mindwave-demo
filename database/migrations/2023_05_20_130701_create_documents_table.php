@@ -14,8 +14,12 @@ return new class extends Migration
             $table->string('filename');
             $table->string('path')->nullable();
             $table->string('type')->nullable();
+
+            $table->string('mime')->nullable();
+            $table->integer('size')->nullable();
+
             $table->longText('text')->nullable();
-            $table->string('state')->nullable()->default(DocumentState::pending);
+            $table->string('state')->nullable()->default(DocumentState::pending->value);
             $table->timestamps();
         });
     }
