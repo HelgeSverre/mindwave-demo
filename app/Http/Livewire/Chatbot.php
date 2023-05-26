@@ -71,7 +71,7 @@ class Chatbot extends Component
         if ($this->draft == '/clear') {
             return $this->commandClearChat();
         }
-        
+
         if ($this->draft == '/debug') {
             return $this->commandToggleDebug();
         }
