@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9cdbfcd5208477eb844bc7ad002a5776",
+    "content-hash": "7f269e2324f4d9c98db3140ddb6e3dc2",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -2330,7 +2330,7 @@
             "dist": {
                 "type": "path",
                 "url": "../mindwave",
-                "reference": "77398ad6d4e22011a51ec62e36739db0e28d411a"
+                "reference": "ed33ebf9adfa9e5eaed26305f31f1afd7f34cba3"
             },
             "require": {
                 "guzzlehttp/guzzle": "^7.5",
@@ -6553,6 +6553,96 @@
                 "source": "https://github.com/timkley/weaviate-php/tree/v0.3.0"
             },
             "time": "2023-04-12T10:53:57+00:00"
+        },
+        {
+            "name": "usernotnull/tall-toasts",
+            "version": "v1.7.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/usernotnull/tall-toasts.git",
+                "reference": "e9fe42b9b32c19b3b770d0db865b8677306c78d0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/usernotnull/tall-toasts/zipball/e9fe42b9b32c19b3b770d0db865b8677306c78d0",
+                "reference": "e9fe42b9b32c19b3b770d0db865b8677306c78d0",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^8.15 || 9.0 - 9.34 || ^9.36 || ^10.0",
+                "livewire/livewire": "^v2.12",
+                "php": "^8.0|^8.1",
+                "spatie/laravel-package-tools": "^1.14"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^v3.14",
+                "laravel/pint": "^1.6",
+                "nunomaduro/collision": "^5.11.0|^6.3.0|^7.0",
+                "nunomaduro/larastan": "^2.4",
+                "orchestra/testbench": "^8.0",
+                "pestphp/pest": "^v1.22",
+                "pestphp/pest-plugin-laravel": "^v1.4",
+                "pestphp/pest-plugin-parallel": "^1.2",
+                "phpmd/phpmd": "^2.13",
+                "squizlabs/php_codesniffer": "^3.7",
+                "vimeo/psalm": "^5.7.7"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Usernotnull\\Toast\\ToastServiceProvider"
+                    ],
+                    "aliases": {
+                        "Toast": "ToastManager"
+                    }
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/helpers.php"
+                ],
+                "psr-4": {
+                    "Usernotnull\\Toast\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "John F (@usernotnull)",
+                    "email": "15612814+usernotnull@users.noreply.github.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A Toast notification library for the Laravel TALL stack. You can push notifications from the backend or frontend to render customizable toasts with almost zero footprint on the published CSS/JS!",
+            "homepage": "https://github.com/usernotnull/tall-toasts",
+            "keywords": [
+                "ToastManager",
+                "alpinejs",
+                "laravel",
+                "laravel-package",
+                "livewire",
+                "tailwindcss",
+                "tall-stack",
+                "tall-toasts",
+                "toast-notifications",
+                "ui-components",
+                "usernotnull"
+            ],
+            "support": {
+                "issues": "https://github.com/usernotnull/tall-toasts/issues",
+                "source": "https://github.com/usernotnull/tall-toasts/tree/v1.7.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/usernotnull",
+                    "type": "github"
+                }
+            ],
+            "time": "2023-03-05T17:46:07+00:00"
         },
         {
             "name": "vlucas/phpdotenv",

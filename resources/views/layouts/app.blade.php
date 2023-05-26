@@ -18,15 +18,17 @@
 
     @vite(['resources/js/app.js', 'resources/css/app.css'])
     <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/intersect@3.x.x/dist/cdn.min.js"></script>
-    <script defer src="https://unpkg.com/alpinejs"></script>
     <style>
         [x-cloak] {
             display: none !important;
         }
     </style>
+    @toastScripts
     <livewire:styles/>
 </head>
 <body class="h-full">
+<livewire:toasts/>
+
 
 <div x-data="{menuOpen: false}">
     <div class="relative z-50 lg:hidden" role="dialog" aria-modal="true"
@@ -234,14 +236,15 @@
                     </li>
 
                     <li class="-mx-6 mt-auto">
-                        <a href="#"
-                           class="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-white hover:bg-purple-700">
-                            <img class="h-8 w-8 rounded-full bg-purple-700"
-                                 src="{{ Gravatar::get("helge.sverre@gmail.com") }}"
-                                 alt="">
-                            <span class="sr-only">Your profile</span>
-                            <span aria-hidden="true">Helge Sverre</span>
-                        </a>
+                        <div href="#"
+                             class="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-white">
+                            <img
+                                class="h-8 w-8 rounded-full bg-purple-700"
+                                src="{{ Gravatar::get("helge.sverre@gmail.com") }}"
+                                alt=""
+                            >
+                            <span>Helge Sverre</span>
+                        </div>
                     </li>
                 </ul>
             </nav>
