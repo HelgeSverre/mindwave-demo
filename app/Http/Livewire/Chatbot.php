@@ -7,18 +7,63 @@ use Illuminate\Support\Facades\Session;
 use Livewire\Component;
 use Mindwave\Mindwave\Facades\Mindwave;
 use Mindwave\Mindwave\Memory\ConversationBufferMemory;
+use Throwable;
+use Usernotnull\Toast\Concerns\WireToast;
 
 class Chatbot extends Component
 {
+    use WireToast;
+
     public Collection $messages;
 
     public string $draft = '';
 
-    public string $mode = 'guest';
+    public bool $debug = false;
 
     public function mount()
     {
         $this->messages = Session::get('chat', collect());
+        $this->debug = Session::get('debug') ?? false;
+    }
+
+    protected function commandToggleDebug()
+    {
+        $this->debug = ! $this->debug;
+        Session::put('debug', $this->debug);
+        toast()->info($this->debug ? 'Debug activated' : 'Debug deactivated')->push();
+        $this->resetInput();
+    }
+
+    protected function commandClearChat()
+    {
+        $this->messages = collect();
+        Session::put('chat', $this->messages);
+        $this->resetInput();
+    }
+
+    protected function commandAskAgent()
+    {
+        try {
+            $history = ConversationBufferMemory::fromMessages($this->messages->toArray());
+            $response = Mindwave::agent($history)->ask($this->draft);
+
+            $this->messages->push([
+                'role' => 'assistant',
+                'content' => $response,
+            ]);
+
+        } catch (Throwable $exception) {
+            toast()->danger('Chatbout could not respond');
+            $this->messages->push([
+                'role' => 'system',
+                'content' => 'Error: '.$exception->getMessage(),
+            ]);
+        }
+    }
+
+    public function resetInput()
+    {
+        $this->reset('draft');
     }
 
     public function sendMessage()
@@ -26,42 +71,24 @@ class Chatbot extends Component
         $msg = trim($this->draft);
 
         if ($msg == '/clear') {
-            $this->messages = collect();
-            Session::put('chat', $this->messages);
-            $this->reset('draft');
-
-            return;
+            return $this->commandClearChat();
         }
-
-        $history = ConversationBufferMemory::fromMessages($this->messages->toArray());
 
         if ($msg == '/debug') {
-            $this->messages->push([
-                'role' => 'debug',
-                'content' => $history->conversationAsString('Human', 'Mindwave'),
-            ]);
-
-            return;
+            return $this->commandToggleDebug();
         }
-
-        $agent = Mindwave::agent($history);
 
         $this->messages->push([
             'role' => 'user',
             'content' => $this->draft,
         ]);
 
-        $response = $agent->ask($this->draft);
+        $this->commandAskAgent();
 
-        $this->messages->push([
-            'role' => 'assistant',
-            'content' => $response,
-        ]);
-
-        $this->reset('draft');
         Session::put('chat', $this->messages);
 
-        $this->emit('message');
+        $this->resetInput();
+
     }
 
     public function render()
