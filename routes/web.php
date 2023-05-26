@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SignedStorageUrlController;
 use App\Http\Livewire\Chatbot;
 use App\Http\Livewire\Dashboard;
 use App\Http\Livewire\Documents;
@@ -16,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::post('vapor/signed-storage-url', [SignedStorageUrlController::class, 'store']);
 
 Route::get('/', Dashboard::class)->name('dashboard');
 Route::get('/documents', Documents::class)->name('documents.index');
