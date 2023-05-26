@@ -68,13 +68,11 @@ class Chatbot extends Component
 
     public function sendMessage()
     {
-        $msg = trim($this->draft);
-
-        if ($msg == '/clear') {
+        if ($this->draft == '/clear') {
             return $this->commandClearChat();
         }
-
-        if ($msg == '/debug') {
+        
+        if ($this->draft == '/debug') {
             return $this->commandToggleDebug();
         }
 
@@ -84,11 +82,8 @@ class Chatbot extends Component
         ]);
 
         $this->commandAskAgent();
-
         Session::put('chat', $this->messages);
-
         $this->resetInput();
-
     }
 
     public function render()
