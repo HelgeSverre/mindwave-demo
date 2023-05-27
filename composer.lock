@@ -2455,7 +2455,7 @@
             "dist": {
                 "type": "path",
                 "url": "../mindwave",
-                "reference": "cb909a201bbdc18d4b0debf9318af9dc81eba1e4"
+                "reference": "b7c0ecd531cd30cc7b28a37491919a9efaa1e337"
             },
             "require": {
                 "ext-zip": "*",
