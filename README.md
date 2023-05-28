@@ -46,17 +46,3 @@ yarn build # or dev
 
 **Note:** Make sure to update your `.env` file with the correct database credentials and
 your [OpenAI API Key](https://platform.openai.com/account/api-keys).
-
-### Indexing your own data
-
-The Mindwave Demo application has a command that lets you specify a folder path, and Mindwave will consume all the
-documents in that folder into your vectorstore for later use with your chatbot, it will also store the document and its
-contents inside your database.
-
-Note that storing the entire content of the file in the database is not an ideal approach for large file, but for the
-sake of keeping this application "portable" (no need for S3, Docker or any other third party file storage solution),
-this is how it is implemented.
-
-```shell
-php artisan documents:consume ~/downloads
-```
