@@ -24,6 +24,8 @@ answering (Q&A) functionality into your application.
 
 To get started with the Mindwave Demo Application, follow these steps:
 
+[Laravel Sail](https://laravel.com/docs/10.x/sail) is recommended.
+
 ```shell
 git clone git@github.com:HelgeSverre/mindwave-demo.git
 cd mindwave-demo
