@@ -40,3 +40,22 @@ yarn dev
 
 **Note:** Make sure to update your `.env` file with the correct database credentials and
 your [OpenAI API Key](https://platform.openai.com/account/api-keys).
+
+## Screenshots
+
+### Document Upload
+
+![img.png](.github/screen-upload.png)
+
+### Documents list
+
+![img.png](.github/screen-documents.png)
+
+### Documents being consumed
+
+![img.png](.github/screen-consuming.png)
+
+### Chatbot
+
+![img.png](.github/screen-chatbot.png)
+
