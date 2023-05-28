@@ -87,6 +87,20 @@ services:
                 - 'http://localhost:9000/minio/health/live'
             retries: 3
             timeout: 5s
+    minio-create-bucket:
+        image: minio/mc
+        depends_on:
+            - minio
+        environment:
+            AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+            AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+            AWS_BUCKET: ${AWS_BUCKET}
+            AWS_ENDPOINT: ${AWS_ENDPOINT}
+        volumes:
+            - './docker/minio:/etc/minio'
+        networks:
+            - sail
+        entrypoint: /etc/minio/create_bucket.sh
     mailpit:
         image: 'axllent/mailpit:latest'
         ports:
@@ -94,6 +108,7 @@ services:
             - '${FORWARD_MAILPIT_DASHBOARD_PORT:-8025}:8025'
         networks:
             - sail
+
     weaviate-console:
         image: semitechnologies/weaviate-console:latest
         networks:
