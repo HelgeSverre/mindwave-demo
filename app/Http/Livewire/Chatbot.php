@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Session;
 use Livewire\Component;
 use Mindwave\Mindwave\Facades\Mindwave;
 use Mindwave\Mindwave\Memory\ConversationBufferMemory;
+use OpenAI\Exceptions\ErrorException;
 use Throwable;
 use Usernotnull\Toast\Concerns\WireToast;
 
@@ -52,8 +53,12 @@ class Chatbot extends Component
                 'content' => $response,
             ]);
 
+        } catch (ErrorException $exception) {
+            if ($exception->getErrorCode() == 'invalid_api_key') {
+                toast()->warning('You forgot to enter your MINDWAVE_OPENAI_API_KEY key', 'Missing OpenAI Key')->push();
+            }
         } catch (Throwable $exception) {
-            toast()->danger('Chatbout could not respond');
+            toast()->danger('Chatbot could not respond')->push();
             $this->messages->push([
                 'role' => 'system',
                 'content' => 'Error: '.$exception->getMessage(),
