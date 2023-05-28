@@ -8,26 +8,17 @@ the [Mindwave Package](https://github.com/helgesverre/mindwave) for Laravel.
 This demo application allows users to upload or index their own files, and then interact with an AI chatbot about the
 contents of those files.
 
+**Note:** this is a demo application and although it is continuously being updated with new features, it is primarily
+meant to be an example and not a production ready application.
+
+Feel free to fork and add features, contributions are welcome.
+
 ## What is Mindwave?
 
 Mindwave is a Laravel package that lets you easily build AI-powered chatbots, agents, and document question and
 answering (Q&A) functionality into your application.
 
-With Mindwave, you can incorporate the power of OpenAI's state-of-the-art language models, Pinecone's vector search
-capabilities and your own custom "tools" to create intelligent software applications.
-
 [Learn more here](https://mindwave.no)
-
-## Features
-
-- Document Upload: Users can upload their documents to the application.
-- Document Chunking: The uploaded documents are automatically split into smaller chunks for efficient indexing and
-  analysis.
-- Vectorstore Indexing: The chunks of documents are indexed by a vector store, enabling fast retrieval and processing of
-  information.
-- Chatbot with conversational memory: Engage in a conversation with the AI-powered chatbot to explore and discuss the
-  content of the
-  uploaded documents.
 
 ## Getting Started
 
@@ -38,10 +29,11 @@ git clone git@github.com:HelgeSverre/mindwave-demo.git
 cd mindwave-demo
 composer install
 cp .env.example .env
-php artisan key:generate
-php artisan migrate:fresh --seed
+sail up -d
+sail artisan key:generate
+sail artisan migrate:fresh --seed
 yarn install
-yarn build # or dev
+yarn dev
 ```
 
 **Note:** Make sure to update your `.env` file with the correct database credentials and
