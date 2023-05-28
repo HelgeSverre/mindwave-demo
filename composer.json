@@ -7,15 +7,6 @@
         "laravel"
     ],
     "license": "MIT",
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../mindwave",
-            "options": {
-                "symlink": false
-            }
-        }
-    ],
     "require": {
         "php": "^8.1",
         "blade-ui-kit/blade-heroicons": "^2.1",
