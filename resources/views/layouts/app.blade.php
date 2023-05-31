@@ -17,7 +17,6 @@
 
 
     @vite(['resources/js/app.js', 'resources/css/app.css'])
-    <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/intersect@3.x.x/dist/cdn.min.js"></script>
     <style>
         [x-cloak] {
             display: none !important;
@@ -240,10 +239,10 @@
                              class="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-white">
                             <img
                                 class="h-8 w-8 rounded-full bg-purple-700"
-                                src="{{ Gravatar::get("helge.sverre@gmail.com") }}"
-                                alt=""
+                                src="{{ Auth::user()->avatar }}"
+                                alt="{{ Auth::user()->name }}"
                             >
-                            <span>Helge Sverre</span>
+                            <span>{{ Auth::user()->name }}</span>
                         </div>
                     </li>
                 </ul>

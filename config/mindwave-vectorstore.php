@@ -31,7 +31,7 @@ return [
         'pinecone' => [
             'api_key' => env('MINDWAVE_PINECONE_API_KEY'),
             'environment' => env('MINDWAVE_PINECONE_ENVIRONMENT'),
-            'index' => 'items', // TODO(18 May 2023) ~ Helge: this concept needs to be implemented in vectorstore
+            'index' => env('MINDWAVE_PINECONE_INDEX'),
         ],
 
         'weaviate' => [

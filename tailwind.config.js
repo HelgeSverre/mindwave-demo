@@ -10,10 +10,6 @@ module.exports = {
     theme: {
         extend: {
             colors: {
-                'bob-yellow-light': '#f9e78d',
-                'bob-yellow': '#f7dc5c',
-                'bob-blue': '#cbe8ef',
-                'bob-blue-light': '#f5fafc',
                 'purple': {
                     '900': '#19182C',
                     '800': '#211D33',

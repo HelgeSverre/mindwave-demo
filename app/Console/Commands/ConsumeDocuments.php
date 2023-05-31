@@ -9,7 +9,7 @@ use Illuminate\Console\Command;
 
 class ConsumeDocuments extends Command
 {
-    protected $signature = 'documents:consume';
+    protected $signature = 'consume:documents';
 
     public function handle()
     {

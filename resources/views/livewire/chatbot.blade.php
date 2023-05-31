@@ -20,7 +20,7 @@
                     <div class="flex justify-end">
                         <div class="mb-4 flex">
                             <div class="flex-1 px-2">
-                                <div class="inline-block max-w-xl rounded-3xl p-4 bg-bob-yellow-light text-gray-900/80">
+                                <div class="inline-block max-w-xl rounded-3xl p-4 bg-yellow-300 text-gray-900/80">
                                     <div class="font-bold text-xs mb-1">Debug</div>
                                     <span>{!! nl2br($message["content"]) !!}</span>
                                 </div>

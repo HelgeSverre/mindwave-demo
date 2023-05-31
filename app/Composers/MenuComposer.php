@@ -23,7 +23,12 @@ class MenuComposer
                     'url' => route('documents.index'),
                     'active' => request()->routeIs('documents.*'),
                 ],
-
+                [
+                    'icon' => 'heroicon-m-envelope',
+                    'label' => 'Emails',
+                    'url' => route('emails.index'),
+                    'active' => request()->routeIs('emails.*'),
+                ],
                 [
                     'icon' => 'heroicon-m-cpu-chip',
                     'label' => 'Chatbot',
