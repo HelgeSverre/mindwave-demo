@@ -36,7 +36,7 @@ class IndexEmails extends Command
             $this->info("Collection '$collectionName' already exists");
         }
 
-        $emails = Email::latest()->limit(50)->get();
+        $emails = Email::latest()->limit(1000)->get();
 
         if ($emails->isEmpty()) {
             $this->warn('No emails to index');
