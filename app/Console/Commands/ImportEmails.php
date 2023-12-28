@@ -7,8 +7,8 @@ use App\Models\Email;
 use App\Models\User;
 use Google\Client;
 use Google\Service\Gmail;
-use Google\Service\Gmail\ListMessagesResponse;
 use Google\Service\Gmail\Message;
+use Google_Service_Gmail_Message;
 use Illuminate\Console\Command;
 
 class ImportEmails extends Command
@@ -43,48 +43,70 @@ class ImportEmails extends Command
 
             $this->info('Fetching last 100 email ids...');
 
-            /** @var ListMessagesResponse $emails */
-            $emails = $service->users_messages->listUsersMessages('me', [
-                'includeSpamTrash' => false,
-                'pageToken' => null,
-                'maxResults' => 100,
-            ]);
+            // TODO: use the pagToken to fetch the next page until there is no pageToken
 
-            $this->info('Fetched!');
+            $messageIds = [];
+            $nextPageToken = null;
+
+            do {
+                $response = $service->users_messages->listUsersMessages('me', [
+                    'q' => 'after:'.now()->subMonths(3)->getTimestamp(),
+                    'includeSpamTrash' => false,
+                    'pageToken' => $nextPageToken,
+                    'maxResults' => 500,
+                ]);
+
+                $nextPageToken = $response->nextPageToken;
+
+                $this->info("Paginating using $nextPageToken, collected ".count($messageIds).' message Ids.');
+
+                $newIds = collect($response->getMessages())
+                    ->map(fn (Google_Service_Gmail_Message $message) => $message->getId())
+                    ->toArray();
+
+                $messageIds = array_merge($messageIds, $newIds);
+            } while ($nextPageToken != null);
+
+            $this->info('Fetched all pages');
 
             /** @var Message $email */
             $client->setDefer(true);
 
-            $batch = $service->createBatch();
+            foreach (collect($messageIds)->chunk(100) as $batchIndex => $batchIds) {
 
-            foreach ($emails as $email) {
-                /** @noinspection PhpParamsInspection */
-                $batch->add($service->users_messages->get('me', $email->id));
+                $this->info("Gathering message batch: {$batchIndex}");
+
+                $batch = $service->createBatch();
+                foreach ($batchIds as $messageId) {
+                    $batch->add($service->users_messages->get('me', $messageId));
+                }
+
+                $response = $batch->execute();
+
+                $this->info('Gathered batch, parsing...');
+
+                foreach ($response as $message) {
+
+                    $mail = MailMessage::fromGmailMessage($message);
+
+                    $this->info("Parsed email: {$mail->subject}");
+
+                    Email::create([
+                        'user_id' => $user->id,
+                        'from' => $mail->from,
+                        'to' => $mail->to,
+                        'reply_to' => $mail->replyTo,
+                        'subject' => $mail->subject,
+                        'body_html' => $mail->bodyHtml,
+                        'body_text' => $mail->bodyText,
+                        'received_at' => $mail->receivedAt,
+                    ]);
+                }
+
+                $this->info('Parsed batch');
             }
-
-            $this->info('Gathering messages in batch!');
-            $response = $batch->execute();
-            $this->info('Done!');
 
             $client->setDefer(false);
-
-            foreach ($response as $message) {
-
-                $mail = MailMessage::fromGmailMessage($message);
-
-                $this->info("Parsed email: {$mail->subject}");
-
-                Email::create([
-                    'user_id' => $user->id,
-                    'from' => $mail->from,
-                    'to' => $mail->to,
-                    'reply_to' => $mail->replyTo,
-                    'subject' => $mail->subject,
-                    'body_html' => $mail->bodyHtml,
-                    'body_text' => $mail->bodyText,
-                    'received_at' => $mail->receivedAt,
-                ]);
-            }
         }
     }
 }
