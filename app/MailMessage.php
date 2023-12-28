@@ -107,9 +107,6 @@ class MailMessage
      */
     protected static function findPlainTextPart(?array $parts)
     {
-
-        dump(self::findPartByContentType($parts, 'text/plain'));
-
         return self::findPartByContentType($parts, 'text/plain');
     }
 
