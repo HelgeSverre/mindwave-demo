@@ -54,7 +54,7 @@ class Emails extends Component
                     ->orderByRaw(sprintf('FIELD(vector_db_id, %s) ASC', implode(', ', array_map(fn ($id) => Str::wrap($id, "'", "'"), $ids))))
                     ->get()
                 : Email::query()
-                    ->latest()
+                    ->latest('received_at')
                     ->get(),
         ]);
     }
