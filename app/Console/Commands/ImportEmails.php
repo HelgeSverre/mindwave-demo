@@ -10,22 +10,25 @@ use Google\Service\Gmail;
 use Google\Service\Gmail\ListMessagesResponse;
 use Google\Service\Gmail\Message;
 use Illuminate\Console\Command;
-use Mindwave\Mindwave\Document\Data\Document;
-use Mindwave\Mindwave\Facades\Mindwave;
-use Mindwave\Mindwave\Facades\Vectorstore;
-use Mindwave\Mindwave\Support\TextUtils;
-use Throwable;
 
-class ConsumeEmails extends Command
+class ImportEmails extends Command
 {
-    protected $signature = 'consume:emails';
+    protected $signature = 'email:import';
 
-    public function handle()
+    // TODO: Build a simplified Gmail client wrapper that supports batching and such and make it available as a package.
+    protected function buildGmailClient($token): Client
     {
         $client = new Client();
         $client->setClientId(config('services.google.client_id'));
         $client->setClientSecret(config('services.google.client_secret'));
         $client->setAccessType('offline');
+        $client->setAccessToken($token);
+
+        return $client;
+    }
+
+    public function handle()
+    {
 
         foreach (User::all() as $user) {
 
@@ -34,16 +37,19 @@ class ConsumeEmails extends Command
 
             $this->info("Starting indexing of emails from user: {$user->id}");
 
-            $client->setAccessToken($user->google_token);
+            $client = $this->buildGmailClient($user->google_token);
+
             $service = new Gmail($client);
 
             $this->info('Fetching last 100 email ids...');
+
             /** @var ListMessagesResponse $emails */
             $emails = $service->users_messages->listUsersMessages('me', [
                 'includeSpamTrash' => false,
                 'pageToken' => null,
                 'maxResults' => 100,
             ]);
+
             $this->info('Fetched!');
 
             /** @var Message $email */
@@ -78,27 +84,6 @@ class ConsumeEmails extends Command
                     'body_text' => $mail->bodyText,
                     'received_at' => $mail->receivedAt,
                 ]);
-            }
-        }
-
-        foreach (Email::latest()->limit(50)->get() as $emailModel) {
-
-            $this->info("Consuming: {$emailModel->subject}");
-
-            try {
-                Mindwave::brain()->consume(new Document(
-                    content: TextUtils::cleanHtml($emailModel->body_html),
-                    metadata: array_filter([
-                        'from' => $emailModel->from,
-                        'to' => $emailModel->to,
-                        'reply_to' => $emailModel->replyTo,
-                        'subject' => $emailModel->subject,
-                        'received_at' => $emailModel->receivedAt,
-                    ])
-                ));
-                $this->comment('vectorstore item count: '.Vectorstore::itemCount());
-            } catch (Throwable $exception) {
-                $this->warn('Error: '.$exception->getMessage());
             }
         }
     }

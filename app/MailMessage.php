@@ -76,8 +76,13 @@ class MailMessage
 
     protected static function findPartByContentType($parts, $contentType)
     {
+        if ($parts === null) {
+            return null;
+        }
+
         foreach ($parts as $part) {
-            if (count($part->getParts()) == 0) {
+
+            if (empty($part->getParts())) {
                 $hasContentType = collect($part->getHeaders())
                     ->where('name', 'Content-Type')
                     ->filter(fn ($header) => Str::contains($header->value, $contentType))
@@ -102,6 +107,9 @@ class MailMessage
      */
     protected static function findPlainTextPart(?array $parts)
     {
+
+        dump(self::findPartByContentType($parts, 'text/plain'));
+
         return self::findPartByContentType($parts, 'text/plain');
     }
 

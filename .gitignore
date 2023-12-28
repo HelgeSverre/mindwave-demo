@@ -39,3 +39,5 @@ testbench.yaml
 vendor
 yarn-error.log
 storage/mindwave/*
+
+/volumes/*

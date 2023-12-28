@@ -11,6 +11,7 @@ return new class extends Migration
         Schema::create('emails', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->string('vector_db_id')->nullable();
             $table->string('from')->nullable();
             $table->string('to')->nullable();
             $table->string('reply_to')->nullable();

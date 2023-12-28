@@ -1,15 +1,15 @@
 <div>
     <section
         x-data="Uploader({
-        multiple: true,
-        resetFilesOnAllFilesCompleted: true,
-        resetFilesOnAllFilesCompletedTimeout: 2500,
-        onAllFilesCompleted: (files) => {
-            $wire.set('uploads', files);
-            console.log(files);
-            $wire.saveUploads();
-        }
-    })"
+                    multiple: true,
+                    resetFilesOnAllFilesCompleted: true,
+                    resetFilesOnAllFilesCompletedTimeout: 2500,
+                    onAllFilesCompleted: (files) => {
+                        $wire.set('uploads', files)
+                        console.log(files)
+                        $wire.saveUploads()
+                    },
+                })"
     >
         <div class="mb-4 rounded-lg border border-gray-200 bg-white p-4">
             <div class="relative">
@@ -80,7 +80,7 @@
             <div class="mb-4 rounded-lg border border-gray-200 bg-white p-4">
                 <input
                     type="search"
-                    wire:model.debounce="search"
+                    wire:model.live.debounce="search"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-purple-500 sm:text-sm sm:leading-6"
                     placeholder="Search..."
                 />

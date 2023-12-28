@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use App\Jobs\ConsumeDocument;
 use App\Models\Document;
@@ -17,8 +17,8 @@ use Usernotnull\Toast\Concerns\WireToast;
  */
 class Documents extends Component
 {
-    use WithFileUploads;
     use WireToast;
+    use WithFileUploads;
     use WithPagination;
 
     /** @var TemporaryUploadedFile */

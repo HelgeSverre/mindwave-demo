@@ -1,40 +1,51 @@
 <div>
+    <div class="mb-6">
+        <div>
+            <input
+                wire:model=""
+                type="search"
+                class="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                placeholder="Search emails..."
+            />
+        </div>
+    </div>
+
     <ul>
         @foreach ($emails as $email)
-            <li
-                class="mb-4 overflow-hidden rounded-md border border-gray-300"
-                x-data="{open: false}"
+            <div
+                class="mx-auto my-4 w-full overflow-hidden rounded-lg border border-gray-200 bg-white"
             >
-                <div class="border-b border-gray-200 bg-gray-50 p-4">
-                    <h2 class="text-lg font-semibold">
-                        {{ $email->subject }}
-                    </h2>
-                    <p class="text-gray-500">From: {{ $email->from }}</p>
-                    <p class="text-gray-500">To: {{ $email->to }}</p>
-                    <p class="text-gray-500">
-                        Reply To: {{ $email->reply_to }}
-                    </p>
-                </div>
-                <div>
-                    <div class="bg-gray-100">
-                        <button
-                            x-on:click="open = !open"
-                            class="flex w-full items-center justify-center p-2"
+                <div class="p-4">
+                    <div class="flex items-center">
+                        <div class="ml-2">
+                            <div class="text-sm font-semibold text-gray-900">
+                                <span class="text-gray-600">
+                                    {{ $email->subject }}
+                                </span>
+                            </div>
+                            <div class="text-sm text-gray-500">
+                                From:
+                                <span class="text-gray-600">
+                                    {{ $email->from }}
+                                </span>
+                            </div>
+                            <div class="text-sm text-gray-500">
+                                To:
+                                <span class="text-gray-600">
+                                    {{ $email->to }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-2 text-sm text-gray-600">
+                        <div
+                            class="max-h-[300px] overflow-auto border border-gray-200 bg-gray-50 p-4 font-mono text-xs"
                         >
-                            <x-heroicon-s-chevron-down
-                                class="h-5 w-5 text-gray-500"
-                            />
-                        </button>
-                    </div>
-                    <div class="bg-white" x-show="open" x-cloak>
-                        <iframe
-                            src="data:text/html;base64,{{ base64_encode($email->body_html) }}"
-                            class="w-full"
-                            height="600"
-                        ></iframe>
+                            {{ trim($email->body_text) }}
+                        </div>
                     </div>
                 </div>
-            </li>
+            </div>
         @endforeach
     </ul>
 </div>

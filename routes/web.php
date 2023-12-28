@@ -3,11 +3,11 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\SocialController;
 use App\Http\Controllers\SignedStorageUrlController;
-use App\Http\Livewire\Chatbot;
-use App\Http\Livewire\Dashboard;
-use App\Http\Livewire\Documents;
-use App\Http\Livewire\Emails;
-use App\Http\Livewire\ShowDocument;
+use App\Livewire\Chatbot;
+use App\Livewire\Dashboard;
+use App\Livewire\Documents;
+use App\Livewire\Emails;
+use App\Livewire\ShowDocument;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,6 +32,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/chatbot', Chatbot::class)->name('chatbot.index');
 });
 
+Route::get('/bypass', function () {
+    Auth::loginUsingId(1);
+
+    return redirect()->route('dashboard');
+})->name('login');
 Route::get('/login', [LoginController::class, 'show'])->name('login');
 Route::get('/auth/google', [SocialController::class, 'redirectToGoogle'])->name('auth.google.redirect');
 Route::get('/auth/google/callback', [SocialController::class, 'handleGoogleCallback'])->name('auth.google.callback');

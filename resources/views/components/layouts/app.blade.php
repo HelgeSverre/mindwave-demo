@@ -43,12 +43,12 @@
             }
         </style>
         @toastScripts
-        <livewire:styles />
+        @livewireStyles
     </head>
     <body class="h-full">
         <livewire:toasts />
 
-        <div x-data="{menuOpen: false}">
+        <div x-data="{ menuOpen: false }">
             <div
                 class="relative z-50 lg:hidden"
                 role="dialog"
@@ -59,10 +59,10 @@
                 <div
                     class="fixed inset-0 bg-gray-900/80"
                     x-show="menuOpen"
-                    x-transition:enter="transition-opacity ease-linear duration-300"
+                    x-transition:enter="transition-opacity duration-300 ease-linear"
                     x-transition:enter-start="opacity-0"
                     x-transition:enter-end="opacity-100"
-                    x-transition:leave="transition-opacity ease-linear duration-300"
+                    x-transition:leave="transition-opacity duration-300 ease-linear"
                     x-transition:leave-start="opacity-100"
                 ></div>
 
@@ -70,10 +70,10 @@
                     <div
                         class="relative mr-16 flex w-full max-w-xs flex-1"
                         x-show="menuOpen"
-                        x-transition:enter="transition ease-in-out duration-300 transform"
+                        x-transition:enter="transform transition duration-300 ease-in-out"
                         x-transition:enter-start="-translate-x-full"
                         x-transition:enter-end="translate-x-0"
-                        x-transition:leave="transition ease-in-out duration-300 transform"
+                        x-transition:leave="transform transition duration-300 ease-in-out"
                         x-transition:leave-start="translate-x-0"
                         x-transition:leave-end="-translate-x-full"
                         x-on:click.outside="menuOpen = false"
@@ -81,10 +81,10 @@
                         <div
                             class="absolute left-full top-0 flex w-16 justify-center pt-5"
                             x-show="menuOpen"
-                            x-transition:enter="ease-in-out duration-300"
+                            x-transition:enter="duration-300 ease-in-out"
                             x-transition:enter-start="opacity-0"
                             x-transition:enter-end="opacity-100"
-                            x-transition:leave="ease-in-out duration-300"
+                            x-transition:leave="duration-300 ease-in-out"
                             x-transition:leave-start="opacity-100"
                             x-transition:leave-end="opacity-0"
                         >
@@ -347,14 +347,14 @@
                         <img
                             class="h-8 w-auto"
                             src="{{ asset('logo.svg') }}"
-                            alt="Mindwav"
+                            alt="Mindwave"
                         />
                     </div>
                     <nav class="flex flex-1 flex-col">
                         <ul role="list" class="flex flex-1 flex-col gap-y-7">
                             <li>
                                 <ul role="list" class="-mx-2 space-y-1">
-                                    @foreach ($menuLinks  as $link)
+                                    @foreach ($menuLinks as $link)
                                         <li>
                                             <a
                                                 href="{{ $link['url'] }}"
@@ -441,6 +441,6 @@
             </main>
         </div>
 
-        <livewire:scripts />
+        @livewireScriptConfig
     </body>
 </html>

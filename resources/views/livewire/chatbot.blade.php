@@ -8,8 +8,15 @@
     </div>
     <div
         x-data="{
-            init() { this.scroll(); $wire.on('message', () => { this.scroll() }) },
-            scroll: () => { $el.scrollTo(0, $el.scrollHeight); },
+            init() {
+                this.scroll()
+                $wire.on('message', () => {
+                    this.scroll()
+                })
+            },
+            scroll: () => {
+                $el.scrollTo(0, $el.scrollHeight)
+            },
         }"
         class="flex flex-1 flex-col overflow-y-scroll"
     >
@@ -83,7 +90,7 @@
 
     <div class="relative my-2 flex h-14 w-full items-center justify-center p-1">
         <div
-            class="flex h-12 w-full overflow-hidden rounded-lg border border-gray-200 bg-red-600 bg-white shadow"
+            class="flex h-12 w-full overflow-hidden rounded-lg border border-gray-200 bg-white shadow"
         >
             <div
                 wire:loading.delay.class.remove="hidden"
@@ -95,7 +102,7 @@
                 <!--suppress HtmlFormInputWithoutLabel -->
                 <input
                     type="text"
-                    wire:model.lazy="draft"
+                    wire:model.blur="draft"
                     wire:keyup.enter="sendMessage"
                     wire:loading.attr="readonly"
                     class="block h-full w-full resize-none border-transparent px-4 py-4 outline-none outline-transparent focus:border-transparent focus:outline-transparent focus:ring-0"
