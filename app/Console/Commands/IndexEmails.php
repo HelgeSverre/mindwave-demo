@@ -58,9 +58,9 @@ class IndexEmails extends Command
                     'vector' => $embedding,
                     'from' => $email->from,
                     'to' => $email->to,
-                    'reply_to' => $email->replyTo,
+                    'reply_to' => $email->reply_to,
                     'subject' => $email->subject,
-                    'received_at' => $email->receivedAt,
+                    'received_at' => $email->received_at,
                 ],
             );
 
