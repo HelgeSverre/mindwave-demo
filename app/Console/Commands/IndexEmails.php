@@ -48,20 +48,11 @@ class IndexEmails extends Command
 
             $this->info("Indexing email: {$email->id} - {$email->subject}");
 
-            dd([
-                //                "vector" => $embedding,
-                'from' => $email->from,
-                'to' => $email->to,
-                'reply_to' => $email->replyTo,
-                'subject' => $email->subject,
-                'received_at' => $email->receivedAt,
-            ]);
-
             $embedding = Brain::embedding(
                 TextUtils::cleanHtml($email->body_html)
             );
 
-            Milvus::vector()->insert(
+            $response = Milvus::vector()->insert(
                 collectionName: $collectionName,
                 data: [
                     'vector' => $embedding,
@@ -73,21 +64,19 @@ class IndexEmails extends Command
                 ],
             );
 
-            //
-            //
-            //
-            //                // TODO: Use milvus library to create collection and insert vectors
-            //
-            //                                Mindwave::brain()->consume(new Document(
-            //                                    content: TextUtils::cleanHtml($email->body_html),
-            //                                    metadata: array_filter([
-            //                                        'from' => $email->from,
-            //                                        'to' => $email->to,
-            //                                        'reply_to' => $email->replyTo,
-            //                                        'subject' => $email->subject,
-            //                                        'received_at' => $email->receivedAt,
-            //                                    ])
-            //                                ));
+            $insertId = $response->json('data.insertIds.0');
+
+            if ($response->failed() || $insertId == null) {
+                $this->error("Failed to index email: {$email->id} - {$email->subject}");
+
+                continue;
+            }
+
+            $this->info("Indexed email: {$email->id} with vector id: $insertId");
+
+            $email->update([
+                'vector_db_id' => $insertId,
+            ]);
         }
     }
 }
