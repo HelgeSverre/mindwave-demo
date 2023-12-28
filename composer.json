@@ -62,8 +62,7 @@
             "php artisan view:clear",
             "php artisan event:clear",
             "php artisan optimize:clear",
-            "php artisan clear-compiled",
-            "php artisan livewire:discover"
+            "php artisan clear-compiled"
         ],
         "app:cache": [
             "php artisan route:cache",
